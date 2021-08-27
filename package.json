@@ -1,0 +1,29 @@
+{
+  "name": "luraph",
+  "version": "1.0.0",
+  "description": "API binding for the Luraph Web API.",
+  "main": "build/index.js",
+  "scripts": {
+    "start": "tsc && node build/index.js",
+    "build": "tsc"
+  },
+  "keywords": [
+    "luraph",
+    "luraph",
+    "obfuscator",
+    "best",
+    "obfuscator",
+    "lua",
+    "lua",
+    "obfuscator"
+  ],
+  "author": "memcorrupt",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^15.0.2",
+    "typescript": "^4.2.4"
+  },
+  "dependencies": {
+    "axios": "^0.21.1"
+  }
+}
