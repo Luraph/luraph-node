@@ -1,7 +1,7 @@
 {
   "name": "luraph",
   "version": "1.0.0",
-  "description": "API binding for the Luraph Web API.",
+  "description": "Luraph API binding for Node.JS",
   "main": "build/index.js",
   "scripts": {
     "start": "tsc && node build/index.js",
@@ -25,5 +25,13 @@
   },
   "dependencies": {
     "axios": "^0.21.1"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LuraphDev/luraph-node.git"
+  },
+  "bugs": {
+    "url": "https://github.com/LuraphDev/luraph-node/issues"
+  },
+  "homepage": "https://github.com/LuraphDev/luraph-node#readme"
 }
