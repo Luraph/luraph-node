@@ -1,6 +1,6 @@
 {
   "name": "luraph",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Luraph API binding for Node.JS",
   "main": "build/index.js",
   "scripts": {
