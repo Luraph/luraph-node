@@ -1,49 +1,25 @@
-import axios, { AxiosError, AxiosInstance, AxiosResponse } from "axios";
-
 const CONTENT_REGEX = /filename[^;=\n]*=(?:(\\?['"])(.*?)\1|(?:[^\s]+'.*?')?([^;\n]*))/i;
 
-export interface LuraphOptionSpec {
+export interface LuraphOptionInfo {
     readonly name: string;
     readonly description: string;
-    readonly tier: string;
-    readonly type: string;
+
+    readonly tier: "CUSTOMER_ONLY" | "PREMIUM_ONLY" | "ADMIN_ONLY";
+    readonly type: "CHECKBOX" | "DROPDOWN" | "TEXT";
+
+    //empty `[]` if `type !== DROPDOWN`
     readonly choices: readonly string[];
-}
-
-export interface LuraphOptionSpecList {
-    readonly [optionName: string]: LuraphOptionSpec;
-}
-
-export interface LuraphOptionList {
-    [optionName: string]: [boolean, string];
 }
 
 export interface LuraphNode {
     readonly cpuUsage: number;
-    readonly options: LuraphOptionSpecList;
+    readonly options: {
+        readonly [key: string]: LuraphOptionInfo;  
+    };
 }
 
-export interface LuraphNodeList {
-    readonly [nodeId: string]: LuraphNode;
-}
-
-export interface LuraphNodesResponse {
-    readonly recommendedId: string;
-    readonly nodes: LuraphNodeList;
-}
-
-export interface LuraphNewJobResponse {
-    readonly jobId: string;
-}
-
-export interface LuraphJobStatusResponse {
-    readonly success: boolean;
-    readonly error?: string;
-}
-
-export interface LuraphDownloadResponse {
-    readonly fileName: string;
-    readonly data: string;
+export interface LuraphOptionList {
+    [key: string]: [boolean, string];
 }
 
 export interface LuraphError {
@@ -59,73 +35,92 @@ export class LuraphException extends Error {
             .map(({param, message}) => param ? `${param}: ${message}` : message)
             .join(" | ");
 
-        super(`Luraph API Error: ${errorMsg}`);
+        super(`${errorMsg}`);
         this.name = this.constructor.name;
 
         this.errors = payload;
     }
 }
-
-export class LuraphAPI {
-    private readonly api: AxiosInstance;
+export default class Luraph {
+    private readonly apiKey: string;
 
     constructor(apiKey: string) {
-        this.api = axios.create({
-            baseURL: "https://api.lura.ph/v1/",
-            headers: {
-                "Luraph-API-Key": apiKey
+        this.apiKey = apiKey;
+    }
+
+    private async doRequest(url: string, isPost = false, body: object | undefined = undefined, rawResponse = false) {
+        const req = await fetch(
+            new URL(url, "https://api.lura.ph/v1/"),
+            {
+                method: isPost ? "POST" : "GET",
+                headers: {
+                    "Luraph-API-Key": this.apiKey,
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(body)
             }
-        });
+        );
+    
+        //raw responses
+        if(rawResponse && req.ok)
+            return req;
 
-        this.api.interceptors.response.use(this.onResponseFufilled, this.onResponseRejected);
-    }
+        const rawResp = await req.text();
+        const resp = rawResp.length ? JSON.parse(rawResp) : {};
 
-    private onResponseFufilled(resp: AxiosResponse) {
-        if(!resp.data)
-            resp.data = {};
-        return Promise.resolve(resp);
-    }
-
-    private onResponseRejected(err: AxiosError) {
-        if(err.isAxiosError && err.response && err.response.data && err.response.data.errors){
-            return Promise.reject(new LuraphException(err.response.data.errors));
+        if(resp.warnings){
+            for(const warning of resp.warnings){
+                console.warn(`Luraph API warning: ${warning}`);
+            }
         }
-        return Promise.reject(err);
+
+        if(req.ok){
+           return resp;
+        }else{
+            let errors = (resp as any)?.errors;
+            if(!errors)
+                errors = [{
+                    message: "An unknown error occurred",
+                    rawBody: resp
+                }];
+    
+            throw new LuraphException(errors);
+        }
+    }    
+
+    getNodes() {
+        return this.doRequest("obfuscate/nodes") as Promise<{ nodes: {[nodeId: string]: LuraphNode}; recommendedId: string | null }>;
     }
 
-    async getNodes() {
-        return (await this.api.get("/obfuscate/nodes")).data as LuraphNodesResponse;
-    }
-
-    async createNewJob(node: string, script: string, fileName: string, options: LuraphOptionList) {
+    createNewJob(node: string, script: string, fileName: string, options: LuraphOptionList, useTokens = false, enforceSettings = false) {
         script = Buffer.from(script).toString("base64");
-        return (await this.api.post("/obfuscate/new", {
+        return this.doRequest("obfuscate/new", true, {
             node,
             script,
             fileName,
-            options
-        })).data as LuraphNewJobResponse;
+            options,
+            useTokens,
+            enforceSettings
+        }) as Promise<{jobId: string}>;
     }
 
     async getJobStatus(jobId: string) {
-        const {data} = await this.api.get(`/obfuscate/status/${jobId}`);
+        const data = await this.doRequest(`obfuscate/status/${jobId}`) as { error: string | null };
         return {
             success: !data.error,
-            error: data.error
-        } as LuraphJobStatusResponse;
+            error: data.error as string | null
+        };
     }
 
     async downloadResult(jobId: string) {
-        const {data, headers} = await this.api.get(`/obfuscate/download/${jobId}`);
-        const fileName = (CONTENT_REGEX.exec(headers['content-disposition'] || '') || [])[2]
+        const req = await this.doRequest(`obfuscate/download/${jobId}`, false, undefined, true);
+        const fileName = CONTENT_REGEX.exec(req.headers.get("content-disposition"))?.[2] || "script-obfuscated.lua";
+        const data = await req.text();
+
         return {
             data,
             fileName
-        } as LuraphDownloadResponse;
+        };
     }
 
 };
-
-export default LuraphAPI;
-export const Luraph = LuraphAPI;
-export const API = LuraphAPI;
