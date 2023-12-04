@@ -18,7 +18,7 @@ devDependencies:
     version: 18.12.5
   '@types/node':
     specifier: ^20.10.0
-    version: 20.10.0
+    version: 20.10.3
   typescript:
     specifier: ^5.3.2
     version: 5.3.2
@@ -34,8 +34,8 @@ packages:
     resolution: {integrity: sha512-KJZX0kQ5FBv77WDVzmQ9y1dUjaJCNXAAz3LSsg5cMwH0AUijVdDQtII+IVprEXdb13U9GjVOBxBzyRvr/ozPxw==}
     dev: true
 
-  /@types/node@20.10.0:
-    resolution: {integrity: sha512-D0WfRmU9TQ8I9PFx9Yc+EBHw+vSpIub4IDvQivcp26PtPrdMGAq5SDcpXEo/epqa/DXotVpekHiLNTg3iaKXBQ==}
+  /@types/node@20.10.3:
+    resolution: {integrity: sha512-XJavIpZqiXID5Yxnxv3RUDKTN5b81ddNC3ecsA0SoFXz/QU8OGBwZGMomiq0zw+uuqbL/krztv/DINAQ/EV4gg==}
     dependencies:
       undici-types: 5.26.5
     dev: true
