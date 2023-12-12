@@ -1,11 +1,11 @@
 {
   "name": "luraph",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Luraph API binding for Node.JS",
   "main": "dist/index.js",
   "scripts": {
-    "start": "tsc && node dist/index.js",
     "build": "tsc",
+    "test": "tsc && node test.js",
     "preinstall": "npx only-allow pnpm"
   },
   "keywords": [
@@ -22,12 +22,12 @@
   "license": "MIT",
   "devDependencies": {
     "@tsconfig/node-lts": "^18.12.5",
-    "@types/node": "^20.10.0",
-    "typescript": "^5.3.2"
+    "@types/node": "^20.10.4",
+    "typescript": "^5.3.3"
   },
   "dependencies": {
     "axios": "^1.6.2",
-    "undici": "^5.28.0"
+    "undici": "^6.0.1"
   },
   "repository": {
     "type": "git",
