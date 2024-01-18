@@ -41,7 +41,8 @@ export class LuraphException extends Error {
         this.errors = payload;
     }
 }
-export default class Luraph {
+
+export class Luraph {
     private readonly apiKey: string;
 
     constructor(apiKey: string) {
@@ -88,11 +89,11 @@ export default class Luraph {
         }
     }    
 
-    getNodes() {
+    public getNodes() {
         return this.doRequest("obfuscate/nodes") as Promise<{ nodes: {[nodeId: string]: LuraphNode}; recommendedId: string | null }>;
     }
 
-    createNewJob(node: string, script: string, fileName: string, options: LuraphOptionList, useTokens = false, enforceSettings = false) {
+    public createNewJob(node: string, script: string, fileName: string, options: LuraphOptionList, useTokens = false, enforceSettings = false) {
         script = Buffer.from(script).toString("base64");
         return this.doRequest("obfuscate/new", true, {
             node,
@@ -101,10 +102,10 @@ export default class Luraph {
             options,
             useTokens,
             enforceSettings
-        }) as Promise<{jobId: string}>;
+        }) as Promise<{ jobId: string }>;
     }
 
-    async getJobStatus(jobId: string) {
+    public async getJobStatus(jobId: string) {
         const data = await this.doRequest(`obfuscate/status/${jobId}`) as { error: string | null };
         return {
             success: !data.error,
@@ -112,7 +113,7 @@ export default class Luraph {
         };
     }
 
-    async downloadResult(jobId: string) {
+    public async downloadResult(jobId: string) {
         const req = await this.doRequest(`obfuscate/download/${jobId}`, false, undefined, true);
         const fileName = CONTENT_REGEX.exec(req.headers.get("content-disposition"))?.[2] || "script-obfuscated.lua";
         const data = await req.text();
@@ -122,5 +123,6 @@ export default class Luraph {
             fileName
         };
     }
-
 };
+
+export default Luraph;

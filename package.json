@@ -1,13 +1,17 @@
 {
   "name": "luraph",
-  "version": "2.0.2",
+  "version": "2.0.3",
   "description": "Luraph API binding for Node.JS",
   "main": "dist/index.js",
   "scripts": {
     "build": "tsc",
     "test": "tsc && node test.js",
-    "preinstall": "npx only-allow pnpm"
+    "preinstall": "npx only-allow pnpm",
+    "setup": "pnpm link . && tsc"
   },
+  "files": [
+    "dist/index.js"
+  ],
   "keywords": [
     "luraph",
     "luraph",
@@ -21,13 +25,12 @@
   "author": "memcorrupt",
   "license": "MIT",
   "devDependencies": {
-    "@tsconfig/node-lts": "^20.1.0",
-    "@types/node": "^20.10.6",
+    "@tsconfig/node-lts": "^20.1.1",
+    "@types/node": "^20.11.5",
     "typescript": "^5.3.3"
   },
   "dependencies": {
-    "axios": "^1.6.3",
-    "undici": "^6.2.1"
+    "undici": "^6.3.0"
   },
   "repository": {
     "type": "git",
