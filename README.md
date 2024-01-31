@@ -3,7 +3,7 @@
 [![Version](https://img.shields.io/npm/v/luraph.svg)](https://www.npmjs.org/package/luraph)
 [![Downloads](https://img.shields.io/npm/dm/luraph.svg)](https://www.npmjs.com/package/luraph)
 [![Bundle Size](https://img.shields.io/bundlephobia/minzip/luraph)](https://www.npmjs.com/package/luraph)
-[![Build Status](https://github.com/Luraph/luraph-node/actions/workflows/release.yml/badge.svg)](https://github.com/Luraph/luraph-node/actions)
+[![Build Status](https://github.com/Luraph/luraph-node/actions/workflows/release.yml/badge.svg)](https://github.com/Luraph/luraph-node/actions/workflows/release.yml)
 [![License](https://img.shields.io/github/license/Luraph/luraph-node)](LICENSE)
 
 This repository hosts the official SDK for interacting with the Luraph API from Node.js environments.
@@ -354,4 +354,4 @@ Fields:
 - [Visit the Luraph Website](https://lura.ph/ "Luraph - Online Lua Obfuscation")
 - [Join the Luraph Discord](https://discord.lura.ph/ "Luraph Discord Server")
 - [Read the Luraph Documentation](https://lura.ph/dashboard/documents "Luraph Documentation")
-- [Read the Luraph FAQs](https://lura.ph/dashboard/faq)
+- [Read the Luraph FAQs](https://lura.ph/dashboard/faq "Luraph Frequently Asked Questions")
