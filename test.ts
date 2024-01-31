@@ -1,11 +1,18 @@
 import { Luraph } from ".";
-const api = new Luraph(process.env.LPH_API_KEY);
+const api = new Luraph(process.env.LPH_API_KEY ?? "");
 
 const main = async () => {
     const nodes = await api.getNodes();
-    console.log("Recommended Node:", nodes.recommendedId);
+    let recommendedId = nodes.recommendedId;
 
-    const node = nodes.nodes[nodes.recommendedId];
+    //this is **not recommended** in a production environment!
+    //recommendedId purposely only recommends nodes marked as stable
+    if(recommendedId === null)
+        recommendedId = Object.keys(nodes)[0];
+
+    console.log("Recommended Node:", recommendedId);
+    const node = nodes.nodes[recommendedId];
+
     console.log("- CPU Usage:", node.cpuUsage);
     console.log("- Options: ");
     for(const [optionId, optionInfo] of Object.entries(node.options)){
@@ -17,7 +24,7 @@ const main = async () => {
         console.log("");
     }
 
-    const {jobId} = await api.createNewJob(nodes.recommendedId, `print'Hello World!'`, "hello-world.txt", {});
+    const {jobId} = await api.createNewJob(recommendedId, `print'Hello World!'`, "hello-world.txt", {});
     console.log("Job ID", jobId);
 
     const {success, error} = await api.getJobStatus(jobId);
