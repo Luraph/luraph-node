@@ -6,7 +6,9 @@ on:
 jobs:
   release:
     runs-on: ubuntu-latest
-    environment: npm
+    environment:
+      name: npm
+      url: https://www.npmjs.org/package/luraph
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
