@@ -1,3 +1,5 @@
+import { fetch } from "undici";
+
 const CONTENT_REGEX = /filename[^;=\n]*=(?:(\\?['"])(.*?)\1|(?:[^\s]+'.*?')?([^;\n]*))/i;
 
 export interface LuraphOptionInfo {

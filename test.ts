@@ -1,4 +1,4 @@
-const Luraph = require("./dist/index").default;
+import { Luraph } from ".";
 const api = new Luraph(process.env.LPH_API_KEY);
 
 const main = async () => {

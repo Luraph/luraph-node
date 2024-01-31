@@ -1,8 +1,12 @@
 {
-  "extends": "@tsconfig/node-lts/tsconfig.json",
-
   "compilerOptions": {
-    "outDir": "dist/",
-    "types": ["@types/node"]
-  }
+    "target": "ESNext",
+    "module": "ESNext",
+    "moduleResolution": "Node",
+    "esModuleInterop": true,
+    "strict": true,
+    "skipLibCheck": true,
+    "noEmit": true
+  },
+  "include": ["src"],
 }

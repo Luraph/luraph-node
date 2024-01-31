@@ -1,17 +1,28 @@
 {
   "name": "luraph",
-  "version": "2.0.3",
+  "version": "2.0.4",
   "description": "Luraph API binding for Node.JS",
-  "main": "dist/index.js",
-  "scripts": {
-    "build": "tsc",
-    "test": "tsc && node test.js",
-    "preinstall": "npx only-allow pnpm",
-    "setup": "pnpm link . && tsc"
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs",
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.mjs"
+    }
   },
   "files": [
-    "dist/index.js"
+    "dist"
   ],
+  "scripts": {
+    "build": "npx unbuild --minify",
+    "dev": "npx unbuild --stub",
+    "prepare": "pnpm run build",
+    "test": "npx jiti test.ts",
+    "preinstall": "npx only-allow pnpm"
+  },
   "keywords": [
     "luraph",
     "luraph",
@@ -25,9 +36,10 @@
   "author": "memcorrupt",
   "license": "MIT",
   "devDependencies": {
-    "@tsconfig/node-lts": "^20.1.1",
     "@types/node": "^20.11.5",
-    "typescript": "^5.3.3"
+    "jiti": "^1.21.0",
+    "typescript": "^5.3.3",
+    "unbuild": "^2.0.0"
   },
   "dependencies": {
     "undici": "^6.3.0"
