@@ -21,7 +21,7 @@ export interface LuraphNode {
 }
 
 export interface LuraphOptionList {
-    [key: string]: [boolean, string];
+    [key: string]: string | boolean;
 }
 
 export interface LuraphError {
