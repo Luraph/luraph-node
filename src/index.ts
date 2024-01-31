@@ -111,8 +111,8 @@ export class Luraph {
         const data = await this.doRequest(`obfuscate/status/${jobId}`) as { error: string | null };
         return {
             success: !data.error,
-            error: data.error as string | null
-        };
+            error: data.error
+        } as ({ success: true, error: null } | { success: false, error: string });
     }
 
     public async downloadResult(jobId: string) {
