@@ -25,24 +25,37 @@
   },
   "keywords": [
     "luraph",
-    "luraph",
     "obfuscator",
-    "best",
-    "obfuscator",
+    "obfuscate",
+    "obfuscation",
     "lua",
-    "lua",
-    "obfuscator"
+    "luau",
+    "luajit",
+    "lua encrypt",
+    "lua encryption",
+    "lua obfuscate",
+    "lua obfuscator",
+    "lua obfuscation",
+    "roblox",
+    "synapse",
+    "scriptware",
+    "fivem",
+    "gta",
+    "growtopia",
+    "assetto corsa",
+    "lightroom",
+    "gmod"
   ],
   "author": "memcorrupt",
   "license": "MIT",
   "devDependencies": {
-    "@types/node": "^20.11.5",
+    "@types/node": "~20.11.13",
     "jiti": "^1.21.0",
     "typescript": "^5.3.3",
     "unbuild": "^2.0.0"
   },
   "dependencies": {
-    "undici": "^6.3.0"
+    "undici": "^6.5.0"
   },
   "repository": {
     "type": "git",
