@@ -1,6 +1,6 @@
 {
   "name": "luraph",
-  "version": "2.0.5",
+  "version": "2.0.6",
   "description": "Luraph API binding for Node.JS",
   "main": "./dist/index.cjs",
   "module": "./dist/index.mjs",
@@ -49,13 +49,13 @@
   "author": "memcorrupt",
   "license": "MIT",
   "devDependencies": {
-    "@types/node": "~20.11.13",
+    "@types/node": "20.x",
     "jiti": "^1.21.0",
     "typescript": "^5.3.3",
     "unbuild": "^2.0.0"
   },
   "dependencies": {
-    "undici": "^6.5.0"
+    "undici": "^6.6.2"
   },
   "repository": {
     "type": "git",
