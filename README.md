@@ -2,7 +2,7 @@
 
 [![Version](https://img.shields.io/npm/v/luraph.svg)](https://www.npmjs.org/package/luraph)
 [![Downloads](https://img.shields.io/npm/dm/luraph.svg)](https://www.npmjs.com/package/luraph)
-[![Bundle Size](https://img.shields.io/bundlephobia/minzip/luraph)](https://www.npmjs.com/package/luraph)
+[![Bundle Size](https://img.shields.io/bundlephobia/minzip/luraph)](https://bundlephobia.com/package/luraph)
 [![Build Status](https://github.com/Luraph/luraph-node/actions/workflows/release.yml/badge.svg)](https://github.com/Luraph/luraph-node/actions/workflows/release.yml)
 [![License](https://img.shields.io/github/license/Luraph/luraph-node)](LICENSE)
 
