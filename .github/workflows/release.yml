@@ -6,6 +6,8 @@ on:
 jobs:
   release:
     runs-on: ubuntu-latest
+    permissions:
+      id-token: write # provenance
     environment:
       name: npm
       url: https://www.npmjs.org/package/luraph
@@ -41,6 +43,6 @@ jobs:
         run: pnpm install --frozen-lockfile
 
       - name: Publish to npmjs
-        run: pnpm publish --no-git-checks
+        run: pnpm publish --provenance --no-git-checks --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
