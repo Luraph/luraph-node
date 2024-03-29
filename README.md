@@ -214,7 +214,9 @@ Fields:
 - **description** - The markdown formatted description for an option.
 - **tier** - One of `CUSTOMER_ONLY`, `PREMIUM_ONLY`, `ADMIN_ONLY`.
 - **type** - One of `CHECKBOX`, `DROPDOWN`, `TEXT`.
+- **required** - If creating a user interface to integrate with Luraph, settings that contain a value of `true` for this field should be explicitly set by the user, since they have a high chance of causing incorrect output when not set properly.
 - **choices** - An array of acceptable option values when `type == DROPDOWN`.
+- **dependencies** - An array of required prerequisite values before this setting can be changed from the default value.
 
 ---
 
