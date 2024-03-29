@@ -17,6 +17,8 @@ const listOptions = async () => {
         console.log("  |- type:", optionInfo.type);
         console.log("  |- tier:", optionInfo.tier);
         console.log("  |- choices:", `[${optionInfo.choices.join(", ")}]`);
+        console.log("  |- required:", optionInfo.required);
+        if(optionInfo.dependencies) console.log("  |- dependencies: ", optionInfo.dependencies);
     }
 };
 

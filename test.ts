@@ -20,7 +20,14 @@ const main = async () => {
         console.log("  |- Description:", optionInfo.description);
         console.log("  |- Type:", optionInfo.type);
         console.log("  |- Tier:", optionInfo.tier);
+        console.log("  |- Required:", optionInfo.required);
         console.log("  |- Choices:", `[${optionInfo.choices.join(", ")}]`);
+        if(optionInfo.dependencies){
+            console.log("  |- Dependencies:");
+            for(const [dependencyId, dependencyChoices] of Object.entries(optionInfo.dependencies)){
+                console.log(`    * ${dependencyId}:`, `[${dependencyChoices.join(", ")}]`);
+            }
+        }
         console.log("");
     }
 
