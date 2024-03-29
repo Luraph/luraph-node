@@ -87,6 +87,8 @@ const listOptions = async () => {
         console.log("  |- type:", optionInfo.type);
         console.log("  |- tier:", optionInfo.tier);
         console.log("  |- choices:", `[${optionInfo.choices.join(", ")}]`);
+        console.log("  |- required:", optionInfo.required);
+        if(optionInfo.dependencies) console.log("  |- dependencies: ", optionInfo.dependencies);
     }
 };
 
@@ -132,112 +134,6 @@ obfuscate("print'Hello World!'", `luraph-node-${Date.now()}.lua`)
     .then(result => console.log(`[*] obfuscation successful: ${result.split("\n")[0]}`))
     .catch(error => console.error(`[*] obfuscation failed: ${error}`));
 ```
-
-### Comparison
-
-<details>
-<summary>Difference between <a href="examples/basic.js">Basic</a> and <a href="examples/list_options.js">List Options</a></summary>
-
-```diff
-6,8c6
-< const obfuscate = async (script, fileName) => {
-<     console.log(`[*] file name: ${fileName}`);
-< 
----
-> const listOptions = async () => {
-14,27c12,19
-< 
-<     const { jobId } = await luraph.createNewJob(nodes.recommendedId, script, fileName, {});
-<     console.log(`[*] job id: ${jobId}`);
-< 
-<     const { success, error } = await luraph.getJobStatus(jobId);
-<     console.log(`[*] job status: ${success ? "success" : "error"}`);
-< 
-<     if(success){
-<         const {fileName: resultName, data} = await luraph.downloadResult(jobId);
-<         console.log(`[*] result name: ${resultName}`);
-<         
-<         return data;
-<     }else{
-<         throw error; //error is a string
----
->     
->     console.log("[*] options:");
->     for(const [optionId, optionInfo] of Object.entries(node.options)){
->         console.log("  *", optionId, "-", optionInfo.name + ":");
->         console.log("  |- desc:", optionInfo.description);
->         console.log("  |- type:", optionInfo.type);
->         console.log("  |- tier:", optionInfo.tier);
->         console.log("  |- choices:", `[${optionInfo.choices.join(", ")}]`);
-31,33c23
-< obfuscate("print'Hello World!'", `luraph-node-${Date.now()}.lua`)
-<     .then(result => console.log(`[*] obfuscation successful: ${result.split("\n")[0]}`))
-<     .catch(error => console.error(`[*] obfuscation failed: ${error}`));
----
-> listOptions();
-```
-
-</details>
-
-<details>
-<summary>Difference between <a href="examples/basic.js">Basic</a> and <a href="examples/set_options.js">Set Options</a></summary>
-
-```diff
-15c15,17
-<     const { jobId } = await luraph.createNewJob(nodes.recommendedId, script, fileName, {});
----
->     const { jobId } = await luraph.createNewJob(nodes.recommendedId, script, fileName, {
->         "TARGET_VERSION": "Lua 5.2"
->     });
-```
-
-</details>
-
-<details>
-<summary>Difference between <a href="examples/list_options.js">List Options</a> and <a href="examples/set_options.js">Set Options</a></summary>
-
-```diff
-6c6,8
-< const listOptions = async () => {
----
-> const obfuscate = async (script, fileName) => {
->     console.log(`[*] file name: ${fileName}`);
-> 
-12,19c14,29
-<     
-<     console.log("[*] options:");
-<     for(const [optionId, optionInfo] of Object.entries(node.options)){
-<         console.log("  *", optionId, "-", optionInfo.name + ":");
-<         console.log("  |- desc:", optionInfo.description);
-<         console.log("  |- type:", optionInfo.type);
-<         console.log("  |- tier:", optionInfo.tier);
-<         console.log("  |- choices:", `[${optionInfo.choices.join(", ")}]`);
----
-> 
->     const { jobId } = await luraph.createNewJob(nodes.recommendedId, script, fileName, {
->         "TARGET_VERSION": "Lua 5.2"
->     });
->     console.log(`[*] job id: ${jobId}`);
-> 
->     const { success, error } = await luraph.getJobStatus(jobId);
->     console.log(`[*] job status: ${success ? "success" : "error"}`);
-> 
->     if(success){
->         const {fileName: resultName, data} = await luraph.downloadResult(jobId);
->         console.log(`[*] result name: ${resultName}`);
->         
->         return data;
->     }else{
->         throw error; //error is a string
-23c33,35
-< listOptions();
----
-> obfuscate("print'Hello World!'", `luraph-node-${Date.now()}.lua`)
->     .then(result => console.log(`[*] obfuscation successful: ${result.split("\n")[0]}`))
->     .catch(error => console.error(`[*] obfuscation failed: ${error}`));
-```
-
-</details>
 
 ## Documentation
 
