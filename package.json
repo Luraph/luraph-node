@@ -49,13 +49,13 @@
   "author": "memcorrupt",
   "license": "MIT",
   "devDependencies": {
-    "@types/node": "20.x",
+    "@types/node": "~20.11.30",
     "jiti": "^1.21.0",
-    "typescript": "^5.3.3",
+    "typescript": "^5.4.3",
     "unbuild": "^2.0.0"
   },
   "dependencies": {
-    "undici": "^6.6.2"
+    "undici": "^6.10.2"
   },
   "repository": {
     "type": "git",
