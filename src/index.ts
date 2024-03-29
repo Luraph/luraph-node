@@ -2,6 +2,12 @@ import { fetch } from "undici";
 
 const CONTENT_REGEX = /filename[^;=\n]*=(?:(\\?['"])(.*?)\1|(?:[^\s]+'.*?')?([^;\n]*))/i;
 
+export type LuraphOptionValue = string | boolean;
+
+export interface LuraphOptionDependencies {
+    readonly [target: string]: readonly LuraphOptionValue[]
+}
+
 export interface LuraphOptionInfo {
     readonly name: string;
     readonly description: string;
@@ -11,6 +17,9 @@ export interface LuraphOptionInfo {
 
     //empty `[]` if `type !== DROPDOWN`
     readonly choices: readonly string[];
+
+    readonly required: boolean;
+    readonly dependencies?: LuraphOptionDependencies;
 }
 
 export interface LuraphNode {
@@ -21,7 +30,7 @@ export interface LuraphNode {
 }
 
 export interface LuraphOptionList {
-    [key: string]: string | boolean;
+    [key: string]: LuraphOptionValue;
 }
 
 export interface LuraphError {
