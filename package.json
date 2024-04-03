@@ -7,8 +7,14 @@
   "types": "./dist/index.d.ts",
   "exports": {
     ".": {
-      "import": "./dist/index.mjs",
-      "require": "./dist/index.cjs",
+      "import": {
+        "types": "./dist/index.d.mts",
+        "default": "./dist/index.mjs"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      },
       "types": "./dist/index.d.ts",
       "default": "./dist/index.mjs"
     }
@@ -17,10 +23,10 @@
     "dist"
   ],
   "scripts": {
-    "build": "npx unbuild --minify",
-    "dev": "npx unbuild --stub",
+    "build": "unbuild --minify",
+    "dev": "unbuild --stub",
     "prepare": "pnpm run build",
-    "test": "npx jiti test.ts",
+    "test": "jiti test.ts",
     "preinstall": "npx only-allow pnpm"
   },
   "keywords": [
@@ -48,15 +54,17 @@
   ],
   "author": "memcorrupt",
   "license": "MIT",
+  "engines": {
+    "node": ">=21.0.0"
+  },
+  "engineStrict": false,
   "devDependencies": {
     "@types/node": "~20.11.30",
     "jiti": "^1.21.0",
     "typescript": "^5.4.3",
     "unbuild": "^2.0.0"
   },
-  "dependencies": {
-    "undici": "^6.10.2"
-  },
+  "dependencies": {},
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Luraph/luraph-node.git"
