@@ -7,35 +7,37 @@ export interface LuraphOptionDependencies {
     readonly [target: string]: readonly LuraphOptionValue[];
 }
 
-export interface LuraphOptionInfo {
-    readonly name: string;
-    readonly description: string;
+export type LuraphOptionInfo = Readonly<{
+    name: string;
+    description: string;
 
-    readonly tier: "CUSTOMER_ONLY" | "PREMIUM_ONLY" | "ADMIN_ONLY";
-    readonly type: "CHECKBOX" | "DROPDOWN" | "TEXT";
+    tier: "CUSTOMER_ONLY" | "PREMIUM_ONLY" | "ADMIN_ONLY";
+    type: "CHECKBOX" | "DROPDOWN" | "TEXT";
 
-    //empty `[]` if `type !== DROPDOWN`
-    readonly choices: readonly string[];
+    /**
+     * empty `[]` if `type !== DROPDOWN`
+     */
+    choices: readonly string[];
 
-    readonly required: boolean;
-    readonly dependencies?: LuraphOptionDependencies;
-}
+    required: boolean;
+    dependencies?: LuraphOptionDependencies;
+}>;
 
-export interface LuraphNode {
-    readonly cpuUsage: number;
-    readonly options: {
+export type LuraphNode = Readonly<{
+    cpuUsage: number;
+    options: {
         readonly [key: string]: LuraphOptionInfo;
     };
-}
+}>;
 
 export interface LuraphOptionList {
     [key: string]: LuraphOptionValue;
 }
 
-export interface LuraphError {
-    readonly param?: string;
-    readonly message: string;
-}
+export type LuraphError = Readonly<{
+    param?: string;
+    message: string;
+}>;
 
 export class LuraphException extends Error {
     public readonly errors: LuraphError[];
