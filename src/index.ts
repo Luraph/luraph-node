@@ -63,12 +63,16 @@ export class Luraph {
         this.apiKey = apiKey;
     }
 
-    private async doRequest(
+    private async request<
+        Parsed extends Object,
+        isRaw extends boolean = false,
+        R = isRaw extends true ? Response : Parsed
+    >(
         url: string,
         isPost = false,
         body: object | undefined = undefined,
-        rawResponse = false
-    ) {
+        rawResponse: isRaw = false as isRaw
+    ): Promise<R> {
         const req = await fetch(new URL(url, "https://api.lura.ph/v1/"), {
             method: isPost ? "POST" : "GET",
             headers: {
@@ -79,6 +83,7 @@ export class Luraph {
         });
 
         //raw responses
+        // @ts-ignore type can't be inferred even though in this branch rawResponse is true
         if (rawResponse && req.ok) return req;
 
         const rawResp = await req.text();
@@ -93,7 +98,11 @@ export class Luraph {
         if (req.ok) {
             return resp;
         } else {
-            let errors = (resp as any)?.errors;
+            let errors = (
+                resp as {
+                    errors: (LuraphError & { rawBody?: string })[];
+                }
+            )?.errors;
             if (!errors)
                 errors = [
                     {
@@ -107,10 +116,10 @@ export class Luraph {
     }
 
     public getNodes() {
-        return this.doRequest("obfuscate/nodes") as Promise<{
+        return this.request<{
             nodes: { [nodeId: string]: LuraphNode };
             recommendedId: string | null;
-        }>;
+        }>("obfuscate/nodes");
     }
 
     public createNewJob(
@@ -122,20 +131,21 @@ export class Luraph {
         enforceSettings = false
     ) {
         script = Buffer.from(script).toString("base64");
-        return this.doRequest("obfuscate/new", true, {
+        return this.request<{ jobId: string }>("obfuscate/new", true, {
             node,
             script,
             fileName,
             options,
             useTokens,
             enforceSettings,
-        }) as Promise<{ jobId: string }>;
+        });
     }
 
     public async getJobStatus(jobId: string) {
-        const data = (await this.doRequest(`obfuscate/status/${jobId}`)) as {
+        const data = await this.request<{
             error: string | null;
-        };
+        }>(`obfuscate/status/${jobId}`);
+
         return {
             success: !data.error,
             error: data.error,
@@ -143,15 +153,18 @@ export class Luraph {
     }
 
     public async downloadResult(jobId: string) {
-        const req = await this.doRequest(
+        const req = await this.request(
             `obfuscate/download/${jobId}`,
             false,
             undefined,
             true
         );
+
         const fileName =
-            CONTENT_REGEX.exec(req.headers.get("content-disposition"))?.[2] ||
-            "script-obfuscated.lua";
+            CONTENT_REGEX.exec(
+                req.headers.get("content-disposition") ?? ""
+            )?.[2] || "script-obfuscated.lua";
+
         const data = await req.text();
 
         return {
