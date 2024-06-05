@@ -15,7 +15,7 @@ devDependencies:
     version: 20.11.30
   jiti:
     specifier: ^1.21.0
-    version: 1.21.0
+    version: 1.21.3
   typescript:
     specifier: ^5.4.3
     version: 5.4.3
@@ -1123,8 +1123,8 @@ packages:
       '@types/estree': 1.0.5
     dev: true
 
-  /jiti@1.21.0:
-    resolution: {integrity: sha512-gFqAIbuKyyso/3G2qhiO2OM6shY6EPP/R0+mkDbyspxKazh8BXDC5FiFsUjlczgdNz/vfra0da2y+aHrusLG/Q==}
+  /jiti@1.21.3:
+    resolution: {integrity: sha512-uy2bNX5zQ+tESe+TiC7ilGRz8AtRGmnJH55NC5S0nSUjvvvM2hJHmefHErugGXN4pNv4Qx7vLsnNw9qJ9mtIsw==}
     hasBin: true
     dev: true
 
@@ -1230,7 +1230,7 @@ packages:
       esbuild: 0.19.12
       fs-extra: 11.2.0
       globby: 13.2.2
-      jiti: 1.21.0
+      jiti: 1.21.3
       mlly: 1.5.0
       mri: 1.2.0
       pathe: 1.1.2
@@ -1779,7 +1779,7 @@ packages:
       esbuild: 0.19.12
       globby: 13.2.2
       hookable: 5.5.3
-      jiti: 1.21.0
+      jiti: 1.21.3
       magic-string: 0.30.7
       mkdist: 1.4.0(typescript@5.4.3)
       mlly: 1.5.0
@@ -1818,7 +1818,7 @@ packages:
       '@babel/standalone': 7.23.10
       '@babel/types': 7.23.9
       defu: 6.1.4
-      jiti: 1.21.0
+      jiti: 1.21.3
       mri: 1.2.0
       scule: 1.3.0
     transitivePeerDependencies:
